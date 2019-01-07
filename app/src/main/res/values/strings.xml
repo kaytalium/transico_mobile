@@ -1,0 +1,72 @@
+<resources>
+    <string name="app_name">Transico</string>
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="nav_header_title">Ovel Heslop</string>
+    <string name="nav_header_subtitle">ovel.heslop@codezero.com</string>
+    <string name="nav_header_desc">Navigation header</string>
+    <string name="action_settings">Settings</string>
+    <string name="driver_menu_schedules">Schedule</string>
+    <string name="driver_menu_time_log">Time Log</string>
+    <string name="driver_menu_report_log">Report Log</string>
+    <string name="driver_menu_profile_manager">Profile Manager</string>
+
+    <!--Strings for the scheduling design-->
+    <string name="sch_route">Route</string>
+    <string name="sch_time">Time</string>
+    <string name="sch_inspector">Inspector</string>
+    <string name="sch_busModel">Bus Model: </string>
+    <string name="sch_busNumber">183</string>
+    <string name="sch_busNumberSubscript">EX</string>
+    <string name="via_route_label">Via Route</string>
+    <string name="via_route_example">Constant Spring Road</string>
+    <string name="bus_number_example">10N5645</string>
+    <string name="inspector_example">Tom Clark</string>
+    <string name="bus_icon">bus Icon</string>
+    <string name="location_icon">location icon</string>
+    <string name="route_example">Half Way Tree to DownTown</string>
+    <string name="time_example">Dec 19, 2018 : 5:00 AM to 12:00 PM</string>
+    <string name="sch_busNumber_label">Bus #</string>
+
+
+    <string name="daySun">SUN</string>
+    <string name="dayMon">MON</string>
+    <string name="dayTue">TUE</string>
+    <string name="dayWed">WED</string>
+    <string name="dayThu">THU</string>
+    <string name="dayFri">FRI</string>
+    <string name="daySat">SAT</string>
+
+    <string name="date_range">07</string>
+    <string name="no_internet">you are not connected to the internet</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_schedule_fragment">Hello Driver schedule fragment</string>
+    <string name="hello_tl_fragment">Hello Time Log fragrament</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_rl_fragment">Hello Report Log fragment</string>
+    <string name="title_activity_profile_manager">ProfileManagerActivity</string>
+
+    <string name="hello_profile_activity">Hello From Profile Activity</string>
+    <string name="title_activity_employee">EmployeeActivity</string>
+    <string name="title_schedule">Schedule</string>
+    <string name="title_time_log">Time Log</string>
+    <string name="title_report_log">Report Log</string>
+    <string name="title_profile">Profile</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="schedule_status_label">Status:</string>
+    <string name="schedule_status_value">Active</string>
+    <string name="inspector_example2">Mary Brown</string>
+    <string name="location_example2">Havendale</string>
+    <string name="location_example">Half Way Tree</string>
+    <string name="checkin_label">Check In</string>
+    <string name="checkout_label">Check Out</string>
+
+    <!--Time Log Strings-->
+    <string name="tl_title_date">Dec 17</string>
+
+
+</resources>
