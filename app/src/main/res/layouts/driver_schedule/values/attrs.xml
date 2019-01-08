@@ -1,2 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources></resources>
+<resources>
+    <declare-styleable name="CustomRadioButton">
+        <attr name="groupNameTextValue" format="string"/>
+        <attr name="groupDescriptionTextValue" format="string"/>
+        <attr name="groupNameTextColor" format="color"/>
+        <attr name="groupDescriptionTextColor" format="color"/>
+        <attr name="selectionTextColor" format="color"/>
+    </declare-styleable>
+    
+    <declare-styleable name="CustomRadioGroup">
+        <attr name="customRadioCheckedId" format="string"/>
+
+    </declare-styleable>
+</resources>
