@@ -1,4 +1,4 @@
-package com.transico.codezero.transico.DriverSchedule;
+package com.transico.codezero.transico.GeneralUI.CustomDatePicker;
 
 import android.content.Context;
 import android.util.Log;
@@ -7,6 +7,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.transico.codezero.transico.DriverScheduler.CalendarViewOnClickListner;
+import com.transico.codezero.transico.DriverScheduler.DriverScheduleFragment;
 import com.transico.codezero.transico.R;
 import com.transico.codezero.transico.SystemHelper.Helper;
 import com.transico.codezero.transico.SystemHelper.databaseCommand;
@@ -24,13 +26,12 @@ import androidx.recyclerview.widget.RecyclerView;
 
 class Kcalendar {
 
-    private CalendarViewOnClickListner listner;
+    private OnClickDatePickListener listner;
 
-    void generateCalendar(RecyclerView recyclerView, Context $this, CalendarViewOnClickListner listner){
+    void generateCalendar(RecyclerView recyclerView, Context $this){
         //Var to store the list of dates
         ArrayList<MyDates> list = new ArrayList<>();
         ArrayList<ArrayList<MyDates>> mainList = new ArrayList<ArrayList<MyDates>>();
-        this.listner = listner;
 
 
         /*
@@ -62,7 +63,7 @@ class Kcalendar {
         //set the starting date to a sunday 2 weeks from current date
         calendar.add(Calendar.DAY_OF_MONTH, setStartDate());
 
-       Log.d("Knymbus-DayCount:", Helper.DateFormatter(databaseCommand.dayMonthDate, calendar.getTime()));
+       Log.d("Knymbus-DayCount:", Helper.DateFormatter(databaseCommand.DateTimeFormat.dayMonthDate, calendar.getTime()));
 
 
         /*
@@ -79,9 +80,9 @@ class Kcalendar {
 
 
                 //Once we get our date we can now set the MyDate object to capture the information the way we want it.
-                MyDates myDates = new MyDates(Helper.DateFormatter(databaseCommand.dayOfTheWeek, calendar.getTime()),
-                        Helper.DateFormatter(databaseCommand.date, calendar.getTime()),
-                        Helper.DateFormatter(databaseCommand.month, calendar.getTime()));
+                MyDates myDates = new MyDates(Helper.DateFormatter(databaseCommand.DateTimeFormat.dayOfTheWeek, calendar.getTime()),
+                        Helper.DateFormatter(databaseCommand.DateTimeFormat.date, calendar.getTime()),
+                        Helper.DateFormatter(databaseCommand.DateTimeFormat.month, calendar.getTime()));
 
                 //We then this object to a list of myDates object for later use
                 list.add(myDates);
@@ -119,18 +120,18 @@ class Kcalendar {
         Date currentDate = new Date();
         Calendar calendar = Calendar.getInstance();
         int numberOfDaysToStart = -14;
-        String[] DaysOfTheWeek = {"Sun","Mon","Tue","Wed","Thu","Fri","Sat"};
+        String[] DaysOfTheWeek = databaseCommand.DateTimeFormat.daysOfWeek;
         calendar.setTime(currentDate);
 
         //Testing dates
         //calendar.set(Calendar.DAY_OF_MONTH,19);
 
         //check what day of the week is today
-        String dayOfTheWeek = Helper.DateFormatter(databaseCommand.dayOfTheWeek,calendar.getTime()); // Sun, Mon, Tue, Wed, Thu, Fri, Sat
+        String dayOfTheWeek = Helper.DateFormatter(databaseCommand.DateTimeFormat.dayOfTheWeek,calendar.getTime()); // Sun, Mon, Tue, Wed, Thu, Fri, Sat
 
         Log.d("DayInString", dayOfTheWeek);
 
-        if(!dayOfTheWeek.equals("Sun")){
+        if(!dayOfTheWeek.equals(databaseCommand.DateTimeFormat.sunday)){
             int index = Arrays.asList(DaysOfTheWeek).indexOf(dayOfTheWeek);
             numberOfDaysToStart -= index;
         }
@@ -144,16 +145,16 @@ class Kcalendar {
 
         private ArrayList<ArrayList<MyDates>> mDate;
         private Context mContext;
-        boolean isDateChange  =false;
+        boolean isDateChange  = false;
         String titleChanged;
 
-        private CalendarViewOnClickListner mListner;
+        private OnClickDatePickListener mListner;
 
 
 
 
         //Constructor
-        DateAdapter(ArrayList<ArrayList<MyDates>> dateList, Context context, CalendarViewOnClickListner listner) {
+        DateAdapter(ArrayList<ArrayList<MyDates>> dateList, Context context, OnClickDatePickListener listner) {
             mDate = dateList;
             mContext = context;
             mListner = listner;
@@ -164,7 +165,7 @@ class Kcalendar {
         @NonNull
         @Override
         public DateHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-            View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.calender, parent,false);
+            View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.horizontal_calendar, parent,false);
             return new DateHolder(view);
         }
 
@@ -180,8 +181,8 @@ class Kcalendar {
                 stop = start + 7;
 
             }
-            int todaysDate  = Integer.valueOf(Helper.DateFormatter(databaseCommand.date, new Date()));
-            String today = Helper.DateFormatter(databaseCommand.dayOfTheWeek, new Date());
+            int todaysDate  = Integer.valueOf(Helper.DateFormatter(databaseCommand.DateTimeFormat.date, new Date()));
+            String today = Helper.DateFormatter(databaseCommand.DateTimeFormat.dayOfTheWeek, new Date());
 
             Log.d("Today is: ", today);
 
@@ -189,7 +190,7 @@ class Kcalendar {
 
 
                 //Sunday
-                if(weeklyList.get(i).getWeekDay().equals("Sun")){
+                if(weeklyList.get(i).getWeekDay().equals(databaseCommand.DateTimeFormat.sunday)){
                    activateDaylist(holder, holder.calendarDateSun,holder.calendarDaySun,weeklyList.get(i).getWeekDate(),weeklyList.get(i).getCalendar().getTime());
                     holder.calendarDateSun.setBackgroundResource(R.drawable.select_date_indicator);
                     holder.calendarDateSun.setTextColor(ContextCompat.getColor(mContext, R.color.calendar_active_color));
@@ -197,32 +198,32 @@ class Kcalendar {
                 }
 
                 //Monday
-                if(weeklyList.get(i).getWeekDay().equals("Mon")){
+                if(weeklyList.get(i).getWeekDay().equals(databaseCommand.DateTimeFormat.monday)){
                     activateDaylist(holder, holder.calendarDateMon,holder.calendarDayMon,weeklyList.get(i).getWeekDate(),weeklyList.get(i).getCalendar().getTime());
                 }
 
                 //Tuesday
-                if(weeklyList.get(i).getWeekDay().equals("Tue")) {
+                if(weeklyList.get(i).getWeekDay().equals(databaseCommand.DateTimeFormat.tuesday)) {
                    activateDaylist(holder, holder.calendarDateTue, holder.calendarDayTue,weeklyList.get(i).getWeekDate(),weeklyList.get(i).getCalendar().getTime());
                 }
 
                 //Wednesday
-                if(weeklyList.get(i).getWeekDay().equals("Wed")){
+                if(weeklyList.get(i).getWeekDay().equals(databaseCommand.DateTimeFormat.wednesday)){
                     activateDaylist(holder, holder.calendarDateWed,holder.calendarDayWed,weeklyList.get(i).getWeekDate(),weeklyList.get(i).getCalendar().getTime());
                 }
 
                 //Thursday
-                if(weeklyList.get(i).getWeekDay().equals("Thu")) {
+                if(weeklyList.get(i).getWeekDay().equals(databaseCommand.DateTimeFormat.thursday)) {
                     activateDaylist(holder, holder.calendarDateThu,holder.calendarDayThu,weeklyList.get(i).getWeekDate(),weeklyList.get(i).getCalendar().getTime());
                 }
 
                 //Friday
-                if(weeklyList.get(i).getWeekDay().equals("Fri")){
+                if(weeklyList.get(i).getWeekDay().equals(databaseCommand.DateTimeFormat.friday)){
                     activateDaylist(holder, holder.calendarDateFri,holder.calendarDayFri,weeklyList.get(i).getWeekDate(),weeklyList.get(i).getCalendar().getTime());
                 }
 
                 //Saturday
-                if(weeklyList.get(i).getWeekDay().equals("Sat")){
+                if(weeklyList.get(i).getWeekDay().equals(databaseCommand.DateTimeFormat.saturday)){
                    activateDaylist(holder, holder.calendarDateSat,holder.calendarDaySat,weeklyList.get(i).getWeekDate(), weeklyList.get(i).getCalendar().getTime());
                 }
             }
@@ -231,7 +232,7 @@ class Kcalendar {
 
         void activateDaylist(final DateHolder holder, final TextView textDate, final TextView textDay, final String listDate, Date longDate){
             final  String userData = listDate;
-            final int todaysDate  = Integer.valueOf(Helper.DateFormatter(databaseCommand.date, new Date()));
+            final int todaysDate  = Integer.valueOf(Helper.DateFormatter(databaseCommand.DateTimeFormat.date, new Date()));
             final Date listLongDate = longDate;
 
 
@@ -251,7 +252,8 @@ class Kcalendar {
                 public void onClick(View view){
 //                    Toast.makeText(mContext, "You have selected "+ userData , Toast.LENGTH_SHORT).show();
 
-                    mListner.recyclerViewClickListner(Integer.valueOf(textDate.getText().toString()), listLongDate);
+                    mListner.datePickListener(Helper.DateFormatter(databaseCommand.DateTimeFormat.shortMonth,listLongDate), Helper.DateFormatter(databaseCommand.DateTimeFormat.date,listLongDate), listLongDate);
+
 
                     /* Sunday */
                     applyHighlight(holder.calendarDateSun, textDate, todaysDate);
