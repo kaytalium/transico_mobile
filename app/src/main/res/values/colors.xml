@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#ffffff</color>
+    <color name="colorPrimaryDark">#00574b</color>
+    <color name="colorAccent">#4d7d85</color>
+    <color name="backgroundDark">#34343e</color>
+    <color name="background">#1d1d24</color>
+    <color name="titleWhite">#fdfdfe</color>
+    <color name="canvasBackground">#030206</color>
+    <color name="informationText">#80808b</color>
+    <color name="indicatorColor">#e18a3d</color>
+    <color name="calendar_inactive_color">#ababab</color>
+    <color name="calendar_active_color">#1E90FF</color>
+    <color name="theme_background_accent">#24242b</color>
+    <color name="secondaryBackground">#2d2d2d</color>
+    <color name="primaryBlue">#1E90FF</color>
+
+</resources>

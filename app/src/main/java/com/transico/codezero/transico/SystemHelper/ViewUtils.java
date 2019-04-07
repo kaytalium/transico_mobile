@@ -1,4 +1,4 @@
-package com.transico.codezero.transico.ReportLog;
+package com.transico.codezero.transico.SystemHelper;
 
 import android.annotation.SuppressLint;
 import android.os.Build;

@@ -1,6 +1,242 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/background"
+    android:layout_marginBottom="5dp"
+    >
 
-</LinearLayout>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingBottom="16dp"
+        >
+
+
+        <TextView
+            android:id="@+id/word_count"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:text="0"
+            android:textColor="@color/colorPrimary"
+            android:layout_marginEnd="@dimen/selection_desc_margin"
+            android:layout_marginTop="@dimen/selection_desc_margin"
+            android:gravity="center"/>
+
+        <TextView
+            android:id="@+id/tv_rlrmc_date"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Dec 29 at 9:00 am"
+            android:layout_alignParentEnd="true"
+            android:textColor="@color/informationText"
+            android:layout_marginEnd="@dimen/selection_desc_margin"
+            android:layout_marginStart="@dimen/selection_desc_margin"
+            android:layout_marginTop="@dimen/selection_desc_margin"
+            android:textSize="12sp"
+            />
+
+        <TextView
+            android:id="@+id/tv_rlrmc_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Tire Issues"
+            android:textSize="16sp"
+            android:layout_marginTop="16dp"
+            android:paddingStart="16dp"
+            android:textColor="@color/colorPrimary"
+            android:layout_alignParentTop="true"/>
+
+        <TextView
+        android:id="@+id/tv_rlrmc_status_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/report_log_display_status"
+        android:textColor="@color/informationText"
+        android:layout_marginStart="@dimen/selection_desc_margin"
+        android:layout_below="@id/tv_rlrmc_title"
+        android:textSize="12sp"
+        />
+
+        <TextView
+            android:id="@+id/tv_rlrmc_status_value"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="In-progress"
+            android:textColor="@color/primaryBlue"
+            android:layout_marginEnd="@dimen/selection_desc_margin"
+            android:layout_marginStart="4dp"
+            android:layout_toEndOf="@id/tv_rlrmc_status_label"
+            android:layout_below="@id/tv_rlrmc_title"
+            android:textSize="12sp"
+            />
+
+
+
+
+        <TextView
+            android:id="@+id/tv_rlrmc_detail"
+            android:layout_width="match_parent"
+            android:layout_height="150dp"
+            android:layout_below="@id/tv_rlrmc_status_label"
+            android:paddingStart="@dimen/selection_desc_margin"
+            android:paddingEnd="@dimen/selection_desc_margin"
+            android:paddingBottom="@dimen/selection_desc_margin"
+            android:layout_marginTop="8dp"
+            android:text="@string/lorem"
+            android:textColor="@color/colorPrimary"
+
+
+            />
+
+        <TextView
+            android:id="@+id/tv_rlrmc_display_group"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/report_log_display_group"
+            android:textColor="@color/informationText"
+            android:layout_below="@id/tv_rlrmc_detail"
+            android:textSize="12sp"
+            android:layout_marginStart="@dimen/selection_desc_margin"/>
+
+        <TextView
+            android:id="@+id/tv_rlrmc_group"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Mechanic"
+            android:layout_toEndOf="@id/tv_rlrmc_display_group"
+            android:textColor="@color/colorPrimary"
+            android:layout_below="@id/tv_rlrmc_detail"
+
+            android:textSize="12sp"
+            android:layout_marginStart="4dp"/>
+
+        <TextView
+            android:id="@+id/tv_rlrmc_display_bus"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/report_log_display_bus"
+            android:textColor="@color/informationText"
+            android:layout_alignStart="@id/tv_rlrmc_group"
+            android:layout_below="@id/tv_rlrmc_detail"
+            android:textSize="12sp"
+            android:layout_marginStart="65dp"/>
+
+        <TextView
+            android:id="@+id/tv_rlrmc_bus_model"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="#67E8976"
+            android:textColor="@color/colorPrimary"
+            android:layout_below="@id/tv_rlrmc_detail"
+            android:layout_toEndOf="@id/tv_rlrmc_display_bus"
+            android:textSize="12sp"
+            android:layout_marginStart="4dp"/>
+
+        <TextView
+            android:id="@+id/tv_rlrmc_respond_view_more"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/tv_rlrmc_detail"
+            android:layout_alignParentEnd="true"
+            android:layout_marginEnd="@dimen/selection_desc_margin"
+            android:text="24 Responses"
+            android:textColor="@color/informationText"
+            android:textSize="12sp"
+            />
+
+
+
+        <!--Latest responses goes below this line-->
+        <RelativeLayout
+            android:id="@+id/latest_container"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/tv_rlrmc_display_group"
+            android:background="@drawable/custom_radio_button_bg_top"
+            android:layout_marginTop="6dp"
+            >
+
+            <TextView
+                android:id="@+id/latest_header"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentTop="true"
+                android:text="latest response from "
+                android:layout_marginTop="8dp"
+                android:layout_marginStart="@dimen/selection_desc_margin"
+                android:textSize="12sp"
+                android:textColor="@color/colorPrimary"
+                />
+
+            <TextView
+                android:id="@+id/tv_rlrmc_respond_agent_name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+               android:layout_alignParentTop="true"
+                android:layout_toEndOf="@id/latest_header"
+                android:text="Susan Crawford"
+                android:layout_marginTop="8dp"
+                android:textSize="12sp"
+                android:paddingTop="0dp"
+                android:textColor="#fff"/>
+
+            <TextView
+                android:id="@+id/tv_rlrmc_respond_time"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/tv_rlrmc_respond_agent_name"
+                android:text="1 HOUR AGO"
+                android:layout_marginStart="@dimen/selection_desc_margin"
+                android:textColor="@color/informationText"
+                android:textSize="10sp"
+                />
+
+            <TextView
+                android:id="@+id/tv_rlrmc_respond_detail"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/tv_rlrmc_respond_time"
+                android:text="@string/lorem"
+                android:paddingStart="@dimen/selection_desc_margin"
+                android:paddingEnd="@dimen/selection_desc_margin"
+                android:layout_marginTop="4dp"
+                android:layout_marginBottom="4dp"
+                android:textColor="#cccbcb"
+                android:lines="2"
+                android:ellipsize="end"
+                android:textSize="12sp"
+                />
+
+        </RelativeLayout>
+
+        <!--Create button to allow user to add their own comment on the issue-->
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_below="@id/latest_container"
+            android:paddingStart="@dimen/selection_desc_margin"
+            android:gravity="bottom">
+
+            <TextView
+                android:id="@+id/comment_icon"
+                android:layout_width="wrap_content"
+                android:layout_height="20dp"
+                android:text="Add a comment..."
+                android:textSize="12sp"
+                android:drawablePadding="4dp"
+               android:background="@color/background"
+                android:textColor="@color/informationText"
+                android:drawableStart="@drawable/ic_baseline_add_comment_24px"
+               android:layout_alignParentTop="true"
+                />
+
+        </RelativeLayout>
+
+    </RelativeLayout>
+
+</RelativeLayout>

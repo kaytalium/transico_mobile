@@ -2,14 +2,14 @@ package com.transico.codezero.transico.ReportLog;
 
 import android.os.Bundle;
 
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.android.material.snackbar.Snackbar;
-
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
-import android.view.View;
+import android.widget.EditText;
+import android.widget.Toast;
 
+import com.transico.codezero.transico.CustomComponents.CustomChatBox.ChatBox;
 import com.transico.codezero.transico.R;
 
 public class ResponseActivity extends AppCompatActivity {
@@ -21,14 +21,28 @@ public class ResponseActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
+        ActionBar actionBar = getSupportActionBar();
+
+        if(actionBar !=null){
+            actionBar.setDisplayHomeAsUpEnabled(true);
+            actionBar.setTitle("Responses");
+        }
+
+        ChatBox chatBox = findViewById(R.id.chat_controller);
+        chatBox.setOnEnterClickListener(new ChatBox.OnEnterClickListener() {
             @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
+            public void enterClickListener(EditText input) {
+                Toast.makeText(getApplicationContext(),"Text: "+input.getText(),Toast.LENGTH_LONG).show();
             }
         });
+
+    }
+
+    @Override
+    public boolean onSupportNavigateUp() {
+//        This is the code that is sending the information back to the calling Activity
+        finish();
+        return super.onSupportNavigateUp();
     }
 
 }

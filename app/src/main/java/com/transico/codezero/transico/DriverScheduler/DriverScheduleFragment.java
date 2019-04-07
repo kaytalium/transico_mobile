@@ -1,26 +1,28 @@
-package com.transico.codezero.transico.DriverSchedule;
+package com.transico.codezero.transico.DriverScheduler;
 
 import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.firestore.CollectionReference;
-import com.google.firebase.firestore.FirebaseFirestore;
+import com.transico.codezero.transico.CustomComponents.CustomDatePicker.HorizontalDatePicker;
+import com.transico.codezero.transico.CustomComponents.CustomDatePicker.OnClickDatePickListener;
+import com.transico.codezero.transico.CustomComponents.CustomDatePicker.OnHorizontalScrollListener;
 import com.transico.codezero.transico.EmployeeActivity;
 import com.transico.codezero.transico.R;
+import com.transico.codezero.transico.FirestoreConnection.FirebaseManager;
+import com.transico.codezero.transico.SystemHelper.Helper;
 import com.transico.codezero.transico.SystemHelper.databaseCommand;
 
 import java.util.Date;
-
-import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.PagerSnapHelper;
 import androidx.recyclerview.widget.RecyclerView;
-import androidx.recyclerview.widget.SnapHelper;
+
 
 
 /**
@@ -46,8 +48,8 @@ public class DriverScheduleFragment extends Fragment  {
     private ScheduleProcessor scheduleProcessor;
 
     //    Firebase firestore database references
-    private FirebaseFirestore firestoreDB = FirebaseFirestore.getInstance();
-    private CollectionReference scheduleCollectionRef = firestoreDB.collection(databaseCommand.driverSchedule);
+//    private FirebaseFirestore firestoreDB = FirebaseFirestore.getInstance();
+//    private CollectionReference scheduleCollectionRef = firestoreDB.collection(databaseCommand.driverSchedule);
 
     //design Components
     private RecyclerView sch_mainList;
@@ -142,41 +144,39 @@ public class DriverScheduleFragment extends Fragment  {
     private void loadSchedule(View view){
 
         sch_mainList = view.findViewById(R.id.sch_recyclerView);
-        RecyclerView calendarList = view.findViewById(R.id.rv_calender);
+        HorizontalDatePicker mHorizontalDatePicker = view.findViewById(R.id.rv_calendar);
 
+        //Set current month in the title bar
+        setActivityTitle(new Date());
 
-        SnapHelper snapHelper = new PagerSnapHelper();
-        snapHelper.attachToRecyclerView(calendarList);
-
-
-        scheduleProcessor = new ScheduleProcessor(scheduleCollectionRef,sch_mainList,getContext());
-
-        CalendarViewOnClickListner mlistner = (new CalendarViewOnClickListner() {
+        mHorizontalDatePicker.setOnClickDatePickerListener(new OnClickDatePickListener() {
             @Override
-            public void recyclerViewClickListner(int shortDate, Date longDate) {
-//                Toast.makeText(MainActivity.this,"Outside called" + String.valueOf(shortDate),Toast.LENGTH_LONG ).show();
+            public void datePickListener(String shortMonth, String longMonth, String dayDate, Date selectedDate) {
+                       //do what you want to do with the date that was clicked
+                scheduleProcessor.updateFilterDate(selectedDate);
 
-                /* update the recyclerview with the new filter date */
-                scheduleProcessor.updateFilterDate(longDate);
-
-                /* Update the Title bar the month of the date that was clicked or selected */
-//                getContext().setTitle(Helper.DateFormatter(databaseCommand.LongMonth,longDate));
-
+                //Setup the month that is displayed in the toolbar
+                //i.e. if its the current year then shows only month "January"
+                //however if the year is greater or less than the current Year then show month and year
+                //December 2018
+                setActivityTitle(selectedDate);
             }
         });
 
-        Kcalendar kc = new Kcalendar();
-        kc.generateCalendar(calendarList, getContext(), mlistner);
-
-
-
-        calendarList.addOnScrollListener(new RecyclerView.OnScrollListener() {
+        mHorizontalDatePicker.setOnHorizontalScrollListener(new OnHorizontalScrollListener() {
             @Override
-            public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
-                super.onScrolled(recyclerView, dx, dy);
-                ((EmployeeActivity)getActivity()).getSupportActionBar().setTitle("November");
+            public void horizontalScrollListener(Date firstDayDate) {
+                scheduleProcessor.updateFilterDate(firstDayDate);
+                setActivityTitle(firstDayDate);
             }
         });
+
+
+
+        //load the recyclerview with the logged in driver schedule
+        scheduleProcessor = new ScheduleProcessor(sch_mainList,getContext());
+
+
 
 
         //process and load the schedule for the current driver and current day
@@ -185,6 +185,17 @@ public class DriverScheduleFragment extends Fragment  {
         scheduleProcessor.scheduleAdapter.startListening();
     }
 
+    private void setActivityTitle(Date date){
+        //current year
+        int currentYear = Integer.valueOf(Helper.DateFormatter(databaseCommand.DateTimeFormat.year,new Date()));
+        int selectedYear = Integer.valueOf(Helper.DateFormatter(databaseCommand.DateTimeFormat.year,date));
+
+        if(currentYear == selectedYear) {
+            ((EmployeeActivity) getActivity()).setActivityTitle(Helper.DateFormatter(databaseCommand.DateTimeFormat.longMonth,date));
+        }else{
+            ((EmployeeActivity) getActivity()).setActivityTitle(Helper.DateFormatter(databaseCommand.DateTimeFormat.longMonthWithYear,date));
+        }
+    }
     public void setBottomNavigation(BottomNavigationView bottomNavigation){
         this.bottomNavigation = bottomNavigation;
     }

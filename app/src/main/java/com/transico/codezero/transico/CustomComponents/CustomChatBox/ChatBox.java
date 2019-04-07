@@ -1,4 +1,4 @@
-package com.transico.codezero.transico.CustomComponents;
+package com.transico.codezero.transico.CustomComponents.CustomChatBox;
 
 import android.content.Context;
 import android.text.Editable;

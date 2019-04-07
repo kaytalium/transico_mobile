@@ -1,6 +1,57 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+<merge xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <RelativeLayout
+        android:id="@+id/chatbox_ui_container"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:minHeight="40dp"
+        android:layout_marginBottom="4dp"
+        android:background="@drawable/custom_radio_button_bg_top"
+        android:layout_gravity="top"
+        android:gravity="top"
+        android:paddingTop="4dp"
+        >
 
-</LinearLayout>
+        <EditText
+            android:id="@+id/et_user_input"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:minHeight="40dp"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentBottom="true"
+            android:inputType="textCapSentences|textMultiLine"
+            android:layout_marginEnd="4dp"
+            android:layout_marginBottom="4dp"
+            android:layout_toStartOf="@+id/fbtn_confirm"
+            android:background="@null"
+            android:hint="Type your comment ...."
+
+            android:paddingStart="16dp"
+
+            android:paddingEnd="0dp"
+            android:textColor="@color/colorPrimary"
+            android:textColorHint="@color/informationText"
+
+            android:textSize="14sp"
+            android:theme="@style/ChatBoxEditTextTheme" />
+
+        <TextView
+            android:id="@+id/fbtn_confirm"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentBottom="true"
+            android:text="Post"
+            android:textColor="@color/informationText"
+            android:layout_marginEnd="16dp"
+            android:gravity="center_vertical"
+            android:clickable="true"
+            android:focusable="true"
+            android:src="@drawable/ic_baseline_send_24px"
+            app:borderWidth="0dp"
+             />
+
+    </RelativeLayout>
+
+</merge>

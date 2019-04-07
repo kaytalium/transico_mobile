@@ -1,10 +1,10 @@
 package com.transico.codezero.transico.FirestoreConnection;
 
-public class ProfileManager extends FirebaseManager {
-    public ProfileManager() {
+public class ProfileDataManager extends FirebaseManager {
+    public ProfileDataManager() {
     }
 
-    public ProfileManager(String collectionRefName) {
+    public ProfileDataManager(String collectionRefName) {
         super(collectionRefName);
     }
 }

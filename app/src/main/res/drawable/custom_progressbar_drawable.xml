@@ -1,4 +1,51 @@
 <?xml version="1.0" encoding="utf-8"?>
-<selector xmlns:android="http://schemas.android.com/apk/res/android">
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:id="@android:id/secondaryProgress">
+        <shape
+            android:innerRadiusRatio="6.2"
+            android:shape="ring"
+            android:thicknessRatio="100.0"
+            android:useLevel="true">
 
-</selector>
+
+            <gradient
+                android:centerColor="#484851"
+                android:endColor="#484851"
+                android:startColor="#484851"
+                android:type="sweep" />
+        </shape>
+    </item>
+
+    <item android:id="@android:id/progress">
+        <rotate
+            android:fromDegrees="270"
+            android:pivotX="50%"
+            android:pivotY="50%"
+            android:toDegrees="270">
+
+            <shape
+                android:innerRadiusRatio="6.2"
+                android:shape="ring"
+                android:thicknessRatio="70.0"
+
+                android:useLevel="true">
+                <solid android:color="@color/calendar_active_color"/>
+
+                <rotate
+                    android:fromDegrees="0"
+                    android:pivotX="50%"
+                    android:pivotY="50%"
+                    android:toDegrees="360" />
+
+                <gradient
+                    android:centerColor="@color/calendar_active_color"
+                    android:endColor="@color/calendar_active_color"
+                    android:startColor="@color/calendar_active_color"
+                    android:type="sweep" />
+
+            </shape>
+        </rotate>
+    </item>
+
+
+</layer-list>

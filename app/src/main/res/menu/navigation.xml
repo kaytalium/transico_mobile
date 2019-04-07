@@ -1,19 +1,35 @@
 <?xml version="1.0" encoding="utf-8"?>
-<menu xmlns:android="http://schemas.android.com/apk/res/android">
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <item
-        android:id="@+id/navigation_home"
-        android:icon="@drawable/ic_home_black_24dp"
-        android:title="@string/title_home" />
+        android:id="@+id/navigation_schedule"
+        android:enabled="true"
+        android:icon="@drawable/ic_baseline_departure_board_24px"
+        android:title="@string/title_schedule"
+        app:showAsAction="ifRoom"/>
 
     <item
-        android:id="@+id/navigation_dashboard"
-        android:icon="@drawable/ic_dashboard_black_24dp"
-        android:title="@string/title_dashboard" />
+        android:id="@+id/navigation_time_log"
+        android:enabled="true"
+        android:icon="@drawable/ic_baseline_alarm_on_24px"
+        android:title="@string/title_time_log"
+        app:showAsAction="ifRoom"/>
 
     <item
-        android:id="@+id/navigation_notifications"
-        android:icon="@drawable/ic_notifications_black_24dp"
-        android:title="@string/title_notifications" />
+        android:id="@+id/navigation_report_log"
+        android:enabled="true"
+
+        android:icon="@drawable/ic_baseline_trending_up_24px"
+        android:title="@string/title_report_log"
+        app:showAsAction="ifRoom"/>
+
+    <item
+        android:id="@+id/navigation_profile"
+        android:enabled="true"
+        android:icon="@drawable/ic_baseline_person_24px"
+        android:title="@string/title_profile"
+        app:showAsAction="ifRoom"
+        />
 
 </menu>

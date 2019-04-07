@@ -1,13 +1,20 @@
-package com.transico.codezero.transico;
+package com.transico.codezero.transico.ReportLog;
 
 import android.content.Context;
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
+
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.android.material.snackbar.Snackbar;
+import com.transico.codezero.transico.R;
 
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.RecyclerView;
 
 
 /**
@@ -19,6 +26,7 @@ import androidx.fragment.app.Fragment;
 public class ReportLogFragment extends Fragment {
 
     private OnFragmentInteractionListener mListener;
+    ReportLogController reportLogController;
 
     public ReportLogFragment() {
         // Required empty public constructor
@@ -29,7 +37,23 @@ public class ReportLogFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layouts for this fragment
-        return inflater.inflate(R.layout.fragment_report_log, container, false);
+        View v = inflater.inflate(R.layout.fragment_report_log, container, false);
+
+        FloatingActionButton fab = v.findViewById(R.id.fab_main_report);
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent i = new Intent(getContext(), NewReportLogActivity.class);
+                startActivity(i);
+            }
+        });
+
+        RecyclerView mRecyclerView = v.findViewById(R.id.main_report_container);
+        reportLogController = new ReportLogController(mRecyclerView,getContext());
+        reportLogController.init();
+        reportLogController.reportLogAdapter.startListening();
+
+        return v;
     }
 
     // TODO: Rename method, update argument and hook method into UI event
@@ -42,6 +66,7 @@ public class ReportLogFragment extends Fragment {
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
+
         if (context instanceof OnFragmentInteractionListener) {
             mListener = (OnFragmentInteractionListener) context;
         } else {
@@ -54,6 +79,7 @@ public class ReportLogFragment extends Fragment {
     public void onDetach() {
         super.onDetach();
         mListener = null;
+        reportLogController.reportLogAdapter.stopListening();
     }
 
     /**

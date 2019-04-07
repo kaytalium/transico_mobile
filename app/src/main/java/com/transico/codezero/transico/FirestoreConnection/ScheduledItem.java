@@ -1,4 +1,4 @@
-package com.transico.codezero.transico.TimeLoger;
+package com.transico.codezero.transico.FirestoreConnection;
 
 import com.google.firebase.Timestamp;
 

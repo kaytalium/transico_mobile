@@ -1,14 +1,16 @@
-package com.transico.codezero.transico.GeneralUI.CustomDatePicker;
+package com.transico.codezero.transico.CustomComponents.CustomDatePicker;
 
+import android.annotation.TargetApi;
 import android.content.Context;
+import android.os.Build;
+import android.os.Handler;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AbsListView;
 import android.widget.TextView;
 
-import com.transico.codezero.transico.DriverScheduler.CalendarViewOnClickListner;
-import com.transico.codezero.transico.DriverScheduler.DriverScheduleFragment;
 import com.transico.codezero.transico.R;
 import com.transico.codezero.transico.SystemHelper.Helper;
 import com.transico.codezero.transico.SystemHelper.databaseCommand;
@@ -18,147 +20,184 @@ import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Objects;
+import java.util.concurrent.atomic.DoubleAdder;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.UiThread;
 import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 class Kcalendar {
 
-    private OnClickDatePickListener listner;
+    private OnClickDatePickListener onClickDatePickListener;
+    private OnHorizontalScrollListener onHorizontalScrollListener;
+    private DateAdapter dateAdapter;
+    DateGenerator dateGenerator;
+    boolean isScrolling = false;
+    int currentItems, totalItems, scrollOutItem;
+    private ArrayList<MyDates> calendarDates;
+    int currentPosition;
 
+    @androidx.annotation.RequiresApi(api = Build.VERSION_CODES.M)
     void generateCalendar(RecyclerView recyclerView, Context $this){
-        //Var to store the list of dates
-        ArrayList<MyDates> list = new ArrayList<>();
-        ArrayList<ArrayList<MyDates>> mainList = new ArrayList<ArrayList<MyDates>>();
+        //Date Generator is a class that handle the creation of sequential dates on the calendar
+        //The Generate method returns an ArrayList<ArrayList<myDates>
+        dateGenerator = new DateGenerator();
 
+        //List of dates formatted for the calendar view
+        calendarDates = dateGenerator.generate();
 
-        /*
-         * We need to do a lazy load of dates
-         * seeing that we will be viewing the dates in one week intervals
-         * we need to create dates from this day to two(2) weeks in the future and two(2)
-         * weeks in the past
-         */
+        //Set the adapter view with the list of dates generated from the DateGenerator class
+        dateAdapter = new DateAdapter(dateGenerator.generate(), $this);
 
-        //setup current time and date
-        Date d = new Date();
-        Calendar calendar = Calendar.getInstance();
-        calendar.setTime(d);
-        //calendar.set(Calendar.MONTH, 10);
-        //calendar.set(Calendar.DAY_OF_MONTH,19);
-        calendar.set(Calendar.HOUR_OF_DAY, 0);// for midnight
-        calendar.set(Calendar.MINUTE, 0);// for 0 min
-        calendar.set(Calendar.SECOND, 0);// for 0 sec
-
-        /*
-         *@description: When the application is loaded it will display 4 week
-         * ie. -14 days and +14 days from current date
-         * With the start date always a Sunday
-         * therefore we must ensure that the whatever date we calculate to be the start date we must push or pull the day to the closest sunday before it.
-         */
-        Integer timelaspe = -14;//initial 14 days
-        Integer timeStopper = -14;
-
-        //set the starting date to a sunday 2 weeks from current date
-        calendar.add(Calendar.DAY_OF_MONTH, setStartDate());
-
-       Log.d("Knymbus-DayCount:", Helper.DateFormatter(databaseCommand.DateTimeFormat.dayMonthDate, calendar.getTime()));
-
-
-        /*
-         * We then loop from -14 to +14 days
-         * on each loop we resent the current date in the calendar
-         *
-         */
-        for(int i = 0; i<4;i++) {
-
-            timeStopper +=  7;
-
-
-            while (timelaspe < timeStopper) { //While timelapse is less than +14 from the current date we will loop
-
-
-                //Once we get our date we can now set the MyDate object to capture the information the way we want it.
-                MyDates myDates = new MyDates(Helper.DateFormatter(databaseCommand.DateTimeFormat.dayOfTheWeek, calendar.getTime()),
-                        Helper.DateFormatter(databaseCommand.DateTimeFormat.date, calendar.getTime()),
-                        Helper.DateFormatter(databaseCommand.DateTimeFormat.month, calendar.getTime()));
-
-                //We then this object to a list of myDates object for later use
-                list.add(myDates);
-
-
-                calendar.add(Calendar.DAY_OF_MONTH, 1);// add 1 one day on each iteration
-
-                //increment the count on the timelapse var to reach its terminating value of 28
-                timelaspe++;
-            }
-
-            mainList.add(list);
-//            list.clear();
-        }
-        //Now that we have looped the current date and created a list of dates we can now add this list to our recyclerview for display
-        DateAdapter dateAdapter = new DateAdapter(mainList, $this, listner);
-
-
-        LinearLayoutManager layoutManager = new LinearLayoutManager($this, LinearLayoutManager.HORIZONTAL, false);
+        final LinearLayoutManager layoutManager = new LinearLayoutManager($this, LinearLayoutManager.HORIZONTAL, false);
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(layoutManager);
 
         recyclerView.setAdapter(dateAdapter);
 
-        Objects.requireNonNull(recyclerView.getLayoutManager()).scrollToPosition(2);
+        Objects.requireNonNull(recyclerView.getLayoutManager()).scrollToPosition(1);
+
+        recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrollStateChanged(@NonNull RecyclerView recyclerView, int newState) {
+                super.onScrollStateChanged(recyclerView, newState);
+                if(newState == AbsListView.OnScrollListener.SCROLL_STATE_TOUCH_SCROLL){
+                    isScrolling = true;
+                }
+
+                if(newState == AbsListView.OnScrollListener.SCROLL_STATE_IDLE){
+
+                    /**
+                     * At this point we now have the accurate position of the adapter therefore we can use the
+                     * Formula to get the first day of each week i.e. sunday
+                     * However, we need to highlight and select the current date for the current week view
+                     */
+
+                    currentPosition =  layoutManager.findFirstVisibleItemPosition();
+                    final int firstDayOfTheWeek = currentPosition * 7;
+
+
+                    if(currentPosition == 1){
+                        onHorizontalScrollListener.horizontalScrollListener(new Date());
+                    }else{
+                        onHorizontalScrollListener.horizontalScrollListener(calendarDates.get(firstDayOfTheWeek).getCalendar().getTime());
+                    }
+
+                    //this crap is not working fix it!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+                    dateAdapter.setOnScrollInnerListener(new OnScrollInnerListener() {
+                        @Override
+                        public void innerScrollListener(TextView textView, MyDates singleDates) {
+                                Log.d("Ovel","we have been scrolled: "+Helper.DateFormatter(databaseCommand.DateTimeFormat.dateMonthYear,singleDates.getCalendar().getTime()));
+
+                                if(Helper.DateFormatter(databaseCommand.DateTimeFormat.dateMonthYear,singleDates.getCalendar().getTime())
+                                        .equals(Helper.DateFormatter(databaseCommand.DateTimeFormat.dateMonthYear,calendarDates.get(firstDayOfTheWeek).getCalendar().getTime()))){
+                                    textView.setBackgroundResource(R.drawable.select_date_indicator);
+                                    textView.setTextColor(ContextCompat.getColor(textView.getContext(), R.color.calendar_active_color));
+                                }
+                        }
+                    });
+
+
+
+                    if(((currentPosition * 7)+7) == calendarDates.size()){
+                        isScrolling = false;
+
+                         //The code below will fetch new data and create continuous scrolling on the view
+//                        fetchNewDates(calendarDates.get((currentPosition * 7)+6).getCalendar().getTime());
+
+                    }
+
+                }
+            }
+
+            @Override
+            public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
+                super.onScrolled(recyclerView, dx, dy);
+                currentItems = layoutManager.getChildCount();
+                totalItems = layoutManager.getItemCount();
+                scrollOutItem = layoutManager.findFirstVisibleItemPosition();
+
+                //Log.d("Ovel","You are viewing adapter position: "+currentItems);
+
+                if(isScrolling && (currentItems + scrollOutItem == totalItems)){
+
+                    //Get add another 3 weeks to view
+
+
+                }
+            }
+        });
+
+
+    }
+
+    private void fetchNewDates(final Date date){
+
+       new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                Calendar c = Calendar.getInstance();
+                c.setTime(date);
+                c = dateGenerator.getDate(c);
+                for(int i=0; i<14; i++){
+                    MyDates md = new MyDates(c);
+                    calendarDates.add(md);
+
+
+                    c = dateGenerator.getDate(c);
+                    String data = Helper.DateFormatter(databaseCommand.DateTimeFormat.dateMonthYear,calendarDates.get(calendarDates.size() - 1).getCalendar().getTime());
+                    Log.d("Ovel","Calendar Date size: "+calendarDates.size()+" and date is: "+data);
+
+
+                }
+                dateAdapter.setList(calendarDates);
+                dateAdapter.notifyDataSetChanged();
+            }
+        },500);
+
 
     }
 
 
-
-
-
-
-    private int setStartDate(){
-        Date currentDate = new Date();
-        Calendar calendar = Calendar.getInstance();
-        int numberOfDaysToStart = -14;
-        String[] DaysOfTheWeek = databaseCommand.DateTimeFormat.daysOfWeek;
-        calendar.setTime(currentDate);
-
-        //Testing dates
-        //calendar.set(Calendar.DAY_OF_MONTH,19);
-
-        //check what day of the week is today
-        String dayOfTheWeek = Helper.DateFormatter(databaseCommand.DateTimeFormat.dayOfTheWeek,calendar.getTime()); // Sun, Mon, Tue, Wed, Thu, Fri, Sat
-
-        Log.d("DayInString", dayOfTheWeek);
-
-        if(!dayOfTheWeek.equals(databaseCommand.DateTimeFormat.sunday)){
-            int index = Arrays.asList(DaysOfTheWeek).indexOf(dayOfTheWeek);
-            numberOfDaysToStart -= index;
-        }
-
-        Log.d("DayCount", Integer.valueOf(numberOfDaysToStart).toString());
-
-        return numberOfDaysToStart;
+    /**
+     * SetOnClickDatePicker fn will accept a listen that will allow a user defined function to perform some action
+     * on the date that was clicked.
+     * @param l OnClickDatePickerListener
+     */
+    void setOnClickDatePickListener(OnClickDatePickListener l){
+        onClickDatePickListener = l;
+        dateAdapter.setOnClickDateListener(l);
     }
 
-    class DateAdapter extends RecyclerView.Adapter<DateHolder>  {
+    void setOnHorizontalScrollListener(OnHorizontalScrollListener l){
+        onHorizontalScrollListener = l;
+    }
 
-        private ArrayList<ArrayList<MyDates>> mDate;
+    /**
+     * Calendar Date Value adapter to bind and handle the UI and data of the calendar component
+     */
+    class DateAdapter extends RecyclerView.Adapter<DateHolder>  implements OnScrollInnerListener{
+
+        private ArrayList<MyDates> mDateList;
         private Context mContext;
         boolean isDateChange  = false;
         String titleChanged;
 
-        private OnClickDatePickListener mListner;
+        private OnClickDatePickListener mListener;
+        OnScrollInnerListener onScrollInnerListener;
 
 
+        public void setList(ArrayList<MyDates> am ){
+            mDateList = am;
+        }
 
 
         //Constructor
-        DateAdapter(ArrayList<ArrayList<MyDates>> dateList, Context context, OnClickDatePickListener listner) {
-            mDate = dateList;
+        DateAdapter(ArrayList<MyDates> dateList, Context context) {
+            mDateList = dateList;
             mContext = context;
-            mListner = listner;
-
         }
 
 
@@ -172,7 +211,7 @@ class Kcalendar {
         @Override
         public void onBindViewHolder(@NonNull DateHolder holder, final int position) {
 
-            final ArrayList<MyDates> weeklyList = mDate.get(position);
+
             int stop, start = 0;
             if(position == 0){
                 stop = 7;
@@ -188,62 +227,72 @@ class Kcalendar {
 
             for(int i = start; i<stop;i++){
 
+                MyDates singleDates = mDateList.get(i);
+
 
                 //Sunday
-                if(weeklyList.get(i).getWeekDay().equals(databaseCommand.DateTimeFormat.sunday)){
-                   activateDaylist(holder, holder.calendarDateSun,holder.calendarDaySun,weeklyList.get(i).getWeekDate(),weeklyList.get(i).getCalendar().getTime());
-                    holder.calendarDateSun.setBackgroundResource(R.drawable.select_date_indicator);
-                    holder.calendarDateSun.setTextColor(ContextCompat.getColor(mContext, R.color.calendar_active_color));
+                if(mDateList.get(i).getWeekDay().equals(databaseCommand.DateTimeFormat.sunday)){
+                   activateDaylist(holder, holder.calendarDateSun,holder.calendarDaySun,singleDates);
+
+
+//
+
+//                    holder.calendarDateSun.setBackgroundResource(R.drawable.select_date_indicator);
+//                    holder.calendarDateSun.setTextColor(ContextCompat.getColor(mContext, R.color.calendar_active_color));
+
 
                 }
 
                 //Monday
-                if(weeklyList.get(i).getWeekDay().equals(databaseCommand.DateTimeFormat.monday)){
-                    activateDaylist(holder, holder.calendarDateMon,holder.calendarDayMon,weeklyList.get(i).getWeekDate(),weeklyList.get(i).getCalendar().getTime());
+                if(mDateList.get(i).getWeekDay().equals(databaseCommand.DateTimeFormat.monday)){
+                    activateDaylist(holder, holder.calendarDateMon,holder.calendarDayMon,singleDates);
                 }
 
                 //Tuesday
-                if(weeklyList.get(i).getWeekDay().equals(databaseCommand.DateTimeFormat.tuesday)) {
-                   activateDaylist(holder, holder.calendarDateTue, holder.calendarDayTue,weeklyList.get(i).getWeekDate(),weeklyList.get(i).getCalendar().getTime());
+                if(mDateList.get(i).getWeekDay().equals(databaseCommand.DateTimeFormat.tuesday)) {
+                   activateDaylist(holder, holder.calendarDateTue, holder.calendarDayTue,singleDates);
                 }
 
                 //Wednesday
-                if(weeklyList.get(i).getWeekDay().equals(databaseCommand.DateTimeFormat.wednesday)){
-                    activateDaylist(holder, holder.calendarDateWed,holder.calendarDayWed,weeklyList.get(i).getWeekDate(),weeklyList.get(i).getCalendar().getTime());
+                if(mDateList.get(i).getWeekDay().equals(databaseCommand.DateTimeFormat.wednesday)){
+                    activateDaylist(holder, holder.calendarDateWed,holder.calendarDayWed,singleDates);
                 }
 
                 //Thursday
-                if(weeklyList.get(i).getWeekDay().equals(databaseCommand.DateTimeFormat.thursday)) {
-                    activateDaylist(holder, holder.calendarDateThu,holder.calendarDayThu,weeklyList.get(i).getWeekDate(),weeklyList.get(i).getCalendar().getTime());
+                if(mDateList.get(i).getWeekDay().equals(databaseCommand.DateTimeFormat.thursday)) {
+                    activateDaylist(holder, holder.calendarDateThu,holder.calendarDayThu,singleDates);
                 }
 
                 //Friday
-                if(weeklyList.get(i).getWeekDay().equals(databaseCommand.DateTimeFormat.friday)){
-                    activateDaylist(holder, holder.calendarDateFri,holder.calendarDayFri,weeklyList.get(i).getWeekDate(),weeklyList.get(i).getCalendar().getTime());
+                if(mDateList.get(i).getWeekDay().equals(databaseCommand.DateTimeFormat.friday)){
+                    activateDaylist(holder, holder.calendarDateFri,holder.calendarDayFri,singleDates);
                 }
 
                 //Saturday
-                if(weeklyList.get(i).getWeekDay().equals(databaseCommand.DateTimeFormat.saturday)){
-                   activateDaylist(holder, holder.calendarDateSat,holder.calendarDaySat,weeklyList.get(i).getWeekDate(), weeklyList.get(i).getCalendar().getTime());
+                if(mDateList.get(i).getWeekDay().equals(databaseCommand.DateTimeFormat.saturday)){
+                   activateDaylist(holder, holder.calendarDateSat,holder.calendarDaySat,singleDates);
                 }
             }
         }
 
 
-        void activateDaylist(final DateHolder holder, final TextView textDate, final TextView textDay, final String listDate, Date longDate){
-            final  String userData = listDate;
+        void activateDaylist(final DateHolder holder, final TextView textDate, final TextView textDay, final MyDates myDates){
+            final  String userData = myDates.getWeekDate();
             final int todaysDate  = Integer.valueOf(Helper.DateFormatter(databaseCommand.DateTimeFormat.date, new Date()));
-            final Date listLongDate = longDate;
+            final Date listLongDate = myDates.getCalendar().getTime();
 
 
-            textDate.setText(listDate);
-            if(todaysDate == Integer.valueOf(listDate)) {
+            textDate.setText(myDates.getWeekDate());
+            if(todaysDate == Integer.valueOf(myDates.getWeekDate())) {
                 textDate.setBackgroundResource(R.drawable.current_date_indicator);
                 textDay.setTextColor(ContextCompat.getColor(mContext, R.color.calendar_active_color));
 
             }
 
 
+            if(onScrollInnerListener !=null){
+                onScrollInnerListener.innerScrollListener(textDate,myDates);
+            }
 
 
             textDate.setOnClickListener(new View.OnClickListener(){
@@ -252,7 +301,15 @@ class Kcalendar {
                 public void onClick(View view){
 //                    Toast.makeText(mContext, "You have selected "+ userData , Toast.LENGTH_SHORT).show();
 
-                    mListner.datePickListener(Helper.DateFormatter(databaseCommand.DateTimeFormat.shortMonth,listLongDate), Helper.DateFormatter(databaseCommand.DateTimeFormat.date,listLongDate), listLongDate);
+                    if(mListener != null){
+                        mListener.datePickListener(Helper.DateFormatter(databaseCommand.DateTimeFormat.shortMonth,listLongDate),
+                                Helper.DateFormatter(databaseCommand.DateTimeFormat.longMonth,listLongDate),
+                                Helper.DateFormatter(databaseCommand.DateTimeFormat.date,listLongDate),
+                                listLongDate);
+                    }else{
+                        Log.d("Ovel","No instruction was found");
+                    }
+
 
 
                     /* Sunday */
@@ -300,10 +357,21 @@ class Kcalendar {
 
         @Override
         public int getItemCount() {
-            return mDate.size();
+            return mDateList.size()/7;
         }
 
 
+        void setOnClickDateListener(OnClickDatePickListener l) {
+            mListener = l;
+        }
+
+        private void setOnScrollInnerListener(OnScrollInnerListener l) { onScrollInnerListener = l;}
+
+        @Override
+        public void innerScrollListener(TextView calendarDateSun, MyDates singleDates) {
+            setOnScrollInnerListener(onScrollInnerListener);
+            Log.d("Ovel","listener triggered"+singleDates.getMonth());
+        }
     }
 
 
@@ -399,5 +467,7 @@ class Kcalendar {
 
         }
     }
+
+
 
 }

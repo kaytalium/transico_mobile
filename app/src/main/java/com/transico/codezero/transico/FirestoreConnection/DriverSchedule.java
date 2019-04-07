@@ -1,4 +1,4 @@
-package com.transico.codezero.transico.DriverScheduler;
+package com.transico.codezero.transico.FirestoreConnection;
 
 import com.google.firebase.firestore.PropertyName;
 import com.google.firebase.firestore.ServerTimestamp;
@@ -10,6 +10,7 @@ import java.util.List;
 public class DriverSchedule {
 
     private String route, time, inspector, driverID, busModel, busNumber, scheduleDate;
+    private StatusInfo statusInfo;
 
 
 
@@ -28,7 +29,8 @@ public class DriverSchedule {
 
     public DriverSchedule() {}
 
-    public DriverSchedule(String route, String time, String inspector, String driverID, String busModel, String busNumber, Date startTime, Date endTime, String scheduleDate) {
+    public DriverSchedule(String route, String time, String inspector, String driverID, String busModel,
+                          String busNumber, Date startTime, Date endTime, String scheduleDate, StatusInfo statusInfo) {
         this.route = route;
         this.time = time;
         this.inspector = inspector;
@@ -38,6 +40,7 @@ public class DriverSchedule {
         this.startTime = startTime;
         this.endTime = endTime;
         this.scheduleDate = scheduleDate;
+        this.statusInfo = statusInfo;
     }
 
     public Date getStartTime() {
@@ -111,5 +114,13 @@ public class DriverSchedule {
 
     public void setBusModel(String busModel) {
         this.busModel = busModel;
+    }
+
+    public StatusInfo getStatusInfo() {
+        return statusInfo;
+    }
+
+    public void setStatusInfo(StatusInfo statusInfo) {
+        this.statusInfo = statusInfo;
     }
 }

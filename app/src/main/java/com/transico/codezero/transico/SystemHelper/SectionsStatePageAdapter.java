@@ -1,4 +1,4 @@
-package com.transico.codezero.transico;
+package com.transico.codezero.transico.SystemHelper;
 
 import android.view.View;
 import android.view.ViewTreeObserver;
@@ -16,16 +16,16 @@ public class SectionsStatePageAdapter extends FragmentStatePagerAdapter implemen
     private final List<String> mFragmentTitleList = new ArrayList<>();
     private View.OnScrollChangeListener mScrollChangeListener = null;
 
-    SectionsStatePageAdapter(FragmentManager fm) {
+    public SectionsStatePageAdapter(FragmentManager fm) {
         super(fm);
     }
 
-    void addFragment(Fragment fragment, String title){
+    public void addFragment(Fragment fragment, String title){
         mFragmentList.add(fragment);
         mFragmentTitleList.add(title);
     }
 
-    void addOnScrollChangedlistner(View.OnScrollChangeListener scrollChangeListener){
+    public void addOnScrollChangedlistner(View.OnScrollChangeListener scrollChangeListener){
         mScrollChangeListener = scrollChangeListener;
     }
 

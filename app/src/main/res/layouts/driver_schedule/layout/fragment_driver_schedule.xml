@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".DriverScheduler.DriverScheduleFragment">
+
+
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/sch_recyclerView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/backgroundDark"
+            android:paddingTop="72dp"
+            android:scrollbars="none"
+            />
+
+
+        <LinearLayout
+            android:id="@+id/calender_container"
+            android:layout_width="match_parent"
+            android:layout_height="70dp"
+            android:background="@color/background"
+            android:gravity="center_vertical|center"
+            android:orientation="horizontal"
+            android:scrollbars="none">
+
+           <com.transico.codezero.transico.CustomComponents.CustomDatePicker.HorizontalDatePicker
+               android:id="@+id/rv_calendar"
+               android:layout_width="match_parent"
+               android:layout_height="match_parent"/>
+
+        </LinearLayout>
+
+
+
+
+
+
+
+</FrameLayout>

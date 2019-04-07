@@ -1,0 +1,25 @@
+<resources>
+    <style name="AppTheme.NoActionBar">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+        <item name="android:statusBarColor">@color/backgroundDark</item>
+    </style>
+
+    <style name="MyEditTextTheme">
+        <item name="colorControlNormal">#bfb6b6</item>
+        <item name="colorControlActivated">@color/calendar_active_color</item>
+        <item name="colorControlHighlight">#FFFFFF</item>
+    </style>
+
+    <style name="NewReportEditTextTheme">
+        <item name="colorControlNormal">@color/secondaryBackground</item>
+        <item name="colorControlActivated">@color/secondaryBackground</item>
+        <item name="colorControlHighlight">@color/primaryBlue</item>
+    </style>
+
+    <style name="ChatBoxEditTextTheme">
+        <item name="colorControlNormal">@color/background</item>
+        <item name="colorControlActivated">@color/primaryBlue</item>
+        <item name="colorControlHighlight">@color/primaryBlue</item>
+    </style>
+</resources>

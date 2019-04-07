@@ -1,0 +1,194 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:background="@color/background">
+
+
+    <TextView
+        android:id="@+id/txtCalendarDaySun"
+        android:layout_width="30dp"
+        android:gravity="center"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="12dp"
+        android:text="@string/daySun"
+        android:textColor="@color/calendar_inactive_color"
+        android:textSize="12sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/txtCalendarDateSun"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_marginStart="8dp"
+        android:gravity="center"
+        android:text="@string/date_range"
+        android:textColor="@color/colorPrimary"
+        android:textSize="12sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/txtCalendarDaySun"
+        tools:layout_editor_absoluteY="28dp" />
+
+    <TextView
+        android:id="@+id/txtCalendarDayMon"
+        android:layout_width="30dp"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="12dp"
+        android:text="@string/dayMon"
+        android:textColor="@color/calendar_inactive_color"
+        android:textSize="12sp"
+        app:layout_constraintStart_toEndOf="@+id/txtCalendarDaySun"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/txtCalendarDateMon"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_marginStart="20dp"
+        android:text="@string/date_range"
+        android:gravity="center"
+        android:textColor="@color/colorPrimary"
+        android:textSize="12sp"
+        app:layout_constraintStart_toEndOf="@+id/txtCalendarDateSun"
+        app:layout_constraintTop_toBottomOf="@+id/txtCalendarDayMon" />
+
+    <TextView
+        android:id="@+id/txtCalendarDayTue"
+        android:layout_width="30dp"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="12dp"
+        android:text="@string/dayTue"
+        android:textColor="@color/calendar_inactive_color"
+        android:textSize="12sp"
+        app:layout_constraintStart_toEndOf="@+id/txtCalendarDayMon"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/txtCalendarDateTue"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:gravity="center"
+        android:layout_marginStart="20dp"
+        android:text="@string/date_range"
+        android:textColor="@color/colorPrimary"
+        android:textSize="12sp"
+        app:layout_constraintStart_toEndOf="@+id/txtCalendarDateMon"
+        app:layout_constraintTop_toBottomOf="@+id/txtCalendarDayTue" />
+
+    <TextView
+        android:id="@+id/txtCalendarDayWed"
+        android:layout_width="30dp"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="12dp"
+        android:text="@string/dayWed"
+        android:textColor="@color/calendar_inactive_color"
+        android:textSize="12sp"
+        app:layout_constraintStart_toEndOf="@+id/txtCalendarDayTue"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/txtCalendarDateWed"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:gravity="center"
+        android:layout_marginStart="20dp"
+        android:text="@string/date_range"
+        android:textColor="@color/colorPrimary"
+        android:textSize="12sp"
+        app:layout_constraintStart_toEndOf="@+id/txtCalendarDateTue"
+        app:layout_constraintTop_toBottomOf="@+id/txtCalendarDayWed" />
+
+    <TextView
+        android:id="@+id/txtCalendarDayThu"
+        android:layout_width="30dp"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="12dp"
+        android:text="@string/dayThu"
+        android:textColor="@color/calendar_inactive_color"
+        android:textSize="12sp"
+        app:layout_constraintStart_toEndOf="@+id/txtCalendarDayWed"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/txtCalendarDateThu"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_marginStart="20dp"
+        android:gravity="center"
+        android:text="@string/date_range"
+        android:textColor="@color/colorPrimary"
+        android:textSize="12sp"
+        app:layout_constraintStart_toEndOf="@+id/txtCalendarDateWed"
+        app:layout_constraintTop_toBottomOf="@+id/txtCalendarDayThu" />
+
+    <TextView
+        android:id="@+id/txtCalendarDayFri"
+        android:layout_width="30dp"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="12dp"
+        android:text="@string/dayFri"
+        android:textColor="@color/calendar_inactive_color"
+        android:textSize="12sp"
+        app:layout_constraintStart_toEndOf="@+id/txtCalendarDayThu"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/txtCalendarDateFri"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:gravity="center"
+        android:layout_marginStart="20dp"
+        android:text="@string/date_range"
+        android:textColor="@color/colorPrimary"
+        android:textSize="12sp"
+        app:layout_constraintStart_toEndOf="@+id/txtCalendarDateThu"
+        app:layout_constraintTop_toBottomOf="@+id/txtCalendarDayFri" />
+
+    <TextView
+        android:id="@+id/txtCalendarDaySat"
+        android:layout_width="30dp"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="12dp"
+
+        android:text="@string/daySat"
+        android:textColor="@color/calendar_inactive_color"
+        android:textSize="12sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toEndOf="@+id/txtCalendarDayFri"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/txtCalendarDateSat"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:gravity="center"
+        android:layout_marginStart="20dp"
+
+        android:text="@string/date_range"
+        android:textColor="@color/colorPrimary"
+        android:textSize="12sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toEndOf="@+id/txtCalendarDateFri"
+        app:layout_constraintTop_toBottomOf="@+id/txtCalendarDaySat" />
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>

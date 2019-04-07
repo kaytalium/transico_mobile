@@ -1,14 +1,17 @@
-package com.transico.codezero.transico.DriverSchedule;
+package com.transico.codezero.transico.DriverScheduler;
 
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.firebase.ui.firestore.FirestoreRecyclerAdapter;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
+import com.transico.codezero.transico.FirestoreConnection.DriverSchedule;
 import com.transico.codezero.transico.R;
+import com.transico.codezero.transico.SystemHelper.Helper;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -40,6 +43,12 @@ public class ScheduleAdapter extends FirestoreRecyclerAdapter<DriverSchedule, Sc
 
         scheduleHolder.inspectorText.setText(driverSchedule.getInspector());
         scheduleHolder.timeText.setText(driverSchedule.getTime());
+
+        if(driverSchedule.getStatusInfo() != null ){
+            scheduleHolder.progressBar.setProgress(driverSchedule.getStatusInfo().getProgressBarMeterValue());
+            scheduleHolder.progressBarValue.setText(Helper.stringBuilder("%d%%",driverSchedule.getStatusInfo().getProgressBarMeterValue()));
+            scheduleHolder.activityStatus.setText(driverSchedule.getStatusInfo().getStatus());
+        }
 
         RecyclerView recyclerView1 = scheduleHolder.mView.findViewById(R.id.rv_via_route);
 
@@ -92,9 +101,9 @@ public class ScheduleAdapter extends FirestoreRecyclerAdapter<DriverSchedule, Sc
         TextView busModelText;
         TextView inspectorText;
         TextView busNumberText;
-        TextView startTimeText;
-        TextView startTimeMariddean;
-        TextView endTimeText;
+        ProgressBar progressBar;
+        TextView progressBarValue;
+        TextView activityStatus;
         TextView endTimeMariddean;
 
 
@@ -111,13 +120,17 @@ public class ScheduleAdapter extends FirestoreRecyclerAdapter<DriverSchedule, Sc
             busNumberText = mView.findViewById(R.id.tv_busNumber);
             inspectorText = mView.findViewById(R.id.tv_inspector);
 
-//            startTimeText = mView.findViewById(R.id.tv_start_time);
-//            startTimeMariddean = mView.findViewById(R.id.tv_start_time_indicator);
-//            endTimeText = mView.findViewById(R.id.tv_end_time);
+            progressBar = mView.findViewById(R.id.progressBar);
+            progressBar.setProgress(0);
+            progressBarValue = mView.findViewById(R.id.tv_timeProgress);
+            progressBarValue.setText("0%");
+            activityStatus = mView.findViewById(R.id.tv_status_value);
+            activityStatus.setText("");
 //            endTimeMariddean = mView.findViewById(R.id.tv_end_time_indicator);
 
         }
     }
+
 
 
 }

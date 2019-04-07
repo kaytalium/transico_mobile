@@ -1,6 +1,194 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="wrap_content"
+    android:background="@drawable/text_view_round"
+    android:paddingBottom="5dp"
+    android:layout_marginBottom="10dp">
 
-</LinearLayout>
+    <TextView
+        android:id="@+id/txtRouteID_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Route ID "
+        android:textSize="10sp"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="10dp"
+        android:layout_marginStart="10dp"
+        android:textColor="@color/informationText"/>
+
+    <TextView
+        android:id="@+id/txtRouteID"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="123"
+        android:layout_below="@id/txtRouteID_label"
+        android:textSize="18sp"
+        android:layout_marginTop="0dp"
+        android:layout_marginStart="10dp"
+        android:textColor="@color/colorPrimary"/>
+
+
+    <TextView
+        android:id="@+id/txtBusNumber_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toEndOf="@id/txtRouteID"
+        android:layout_alignParentEnd="true"
+        android:gravity="right"
+        android:layout_marginEnd="40dp"
+        android:layout_alignEnd="@id/txtRouteID_label"
+        android:layout_marginTop="10dp"
+        android:textSize="10sp"
+        android:text="Bus Model #"
+        android:textColor="@color/informationText"/>
+
+    <TextView
+        android:id="@+id/txtBusNumber_value"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/txtBusNumber_label"
+        android:layout_toEndOf="@id/txtRouteID"
+        android:layout_alignParentEnd="true"
+        android:gravity="right"
+        android:layout_marginEnd="40dp"
+        android:layout_marginTop="0dp"
+        android:text="90C5643"
+        android:textColor="@color/colorPrimary" />
+
+    <RelativeLayout
+        android:id="@+id/schedule_container"
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:layout_below="@+id/txtBusNumber_value"
+        android:layout_marginTop="10dp"
+        android:layout_alignStart="@id/txtRouteID_label"
+        android:layout_marginEnd="5dp"
+        >
+
+
+    <TextView
+        android:id="@+id/txtScheduled_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="start|center"
+        android:layout_marginTop="5dp"
+        android:textSize="10sp"
+        android:text="Schedule Time"
+        android:textColor="@color/informationText" />
+
+    <TextView
+        android:id="@+id/txtschedule_to_work"
+        android:layout_width="120dp"
+        android:layout_height="wrap_content"
+        android:gravity="start|center"
+        android:layout_below="@id/txtScheduled_label"
+        android:layout_marginTop="0dp"
+        android:layout_marginStart="0dp"
+        android:text="5:00 AM to 9:00 AM"
+        android:textSize="12sp"
+        android:textColor="@color/colorPrimary" />
+
+    <TextView
+        android:id="@+id/txttotal_scheduled_to_work"
+        android:layout_width="wrap_content"
+        android:minWidth="40dp"
+        android:layout_height="20dp"
+        android:textSize="10sp"
+        android:layout_below="@+id/txtScheduled_label"
+        android:layout_toEndOf="@id/txtschedule_to_work"
+        android:background="@drawable/location_marker"
+        android:layout_marginTop="0dp"
+        android:layout_marginStart="10dp"
+
+        android:text="4h"
+        android:textColor="@color/background"
+        android:gravity="center"/>
+    </RelativeLayout>
+
+<RelativeLayout
+    android:id="@+id/active_log"
+    android:layout_width="match_parent"
+    android:layout_height="45dp"
+    android:layout_below="@id/schedule_container"
+    android:layout_marginTop="0dp"
+    android:layout_marginStart="10dp"
+    android:layout_marginEnd="10dp"
+    >
+
+    <TextView
+        android:id="@+id/actual_time_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="start|center"
+        android:text="Actual Time Log"
+        android:layout_alignParentStart="true"
+        android:textColor="@color/informationText"
+        android:textSize="10sp"
+        android:layout_marginTop="5dp"
+
+        />
+
+    <TextView
+        android:id="@+id/txtworktime_value"
+        android:layout_width="120dp"
+        android:layout_height="wrap_content"
+        android:gravity="start|center"
+        android:layout_marginTop="0dp"
+        android:layout_marginStart="0dp"
+        android:layout_below="@id/actual_time_label"
+        android:autoSizeMaxTextSize="5dp"
+        android:text="5:20 AM to 8:45 AM"
+        android:textSize="12dp"
+        android:textColor="@color/colorPrimary" />
+
+
+    <TextView
+        android:id="@+id/txtTotal_worked"
+        android:layout_width="wrap_content"
+        android:layout_height="20dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="0dp"
+        android:layout_below="@id/actual_time_label"
+        android:layout_toEndOf="@id/txtworktime_value"
+        android:background="@drawable/location_marker"
+        android:gravity="center"
+        android:paddingLeft="4dp"
+        android:paddingRight="4dp"
+        android:minWidth="40dp"
+        android:text="3h 30m"
+        android:textColor="@color/background"
+        android:textSize="10sp" />
+</RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/chart"
+        android:layout_width="match_parent"
+        android:layout_height="30dp"
+        android:gravity="center|end"
+        android:layout_below="@id/active_log">
+
+
+        <TextView
+            android:id="@+id/achieve_label"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Percentage Achieved"
+            android:layout_marginEnd="8dp"
+            android:layout_alignParentEnd="true"
+            android:textSize="10sp"
+            android:textColor="@color/informationText"/>
+
+        <TextView
+            android:id="@+id/percentage_achieve_value"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toEndOf="@+id/achieve_label"
+            android:layout_marginEnd="10dp"
+            android:text="87.5%"
+
+            android:textSize="10sp"
+            android:textColor="@color/informationText"/>
+
+    </RelativeLayout>
+</RelativeLayout>

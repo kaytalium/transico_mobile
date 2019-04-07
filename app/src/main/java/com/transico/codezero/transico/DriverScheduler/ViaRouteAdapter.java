@@ -1,4 +1,4 @@
-package com.transico.codezero.transico.DriverSchedule;
+package com.transico.codezero.transico.DriverScheduler;
 
 import android.content.Context;
 import android.view.LayoutInflater;

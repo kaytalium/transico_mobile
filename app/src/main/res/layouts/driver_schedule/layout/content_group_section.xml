@@ -1,11 +1,72 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
-    tools:context=".ProfileManagement.GroupSectionActivity"
-    tools:showIn="@layout/activity_group_section">
+    tools:context=".ReportLog.GroupSelectionActivity"
+    tools:showIn="@layout/activity_group_section"
+    android:background="@color/background">
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    <TextView
+        android:id="@+id/title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/group_title"
+        android:textSize="14sp"
+        android:layout_marginTop="16dp"
+        android:layout_marginStart="16dp"
+        android:textColor="@color/colorPrimary"
+        android:textStyle="bold"/>
+
+    <TextView
+        android:id="@+id/description"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/title"
+        android:text="@string/group_description"
+        android:textColor="@color/colorPrimary"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginTop="10dp"
+        />
+
+
+    <com.transico.codezero.transico.CustomComponents.CustomRadioButtonOption.CustomRadioGroup
+        android:id="@+id/radioGroup"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/description"
+        android:layout_marginTop="16dp"
+        android:weightSum="2"
+        android:orientation="vertical"
+        android:background="@drawable/custom_radio_button_bg_top"
+        >
+
+
+        <com.transico.codezero.transico.CustomComponents.CustomRadioButtonOption.CustomRadioButton
+            android:id="@+id/radioMale"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_marginStart="0dp"
+            android:layout_weight="1"
+            app:groupNameTextValue="Mechanic Group"
+            app:groupNameTextColor="@color/colorPrimary"
+            app:groupDescriptionTextValue="Anyone from this group can respond"
+            app:groupDescriptionTextColor="@color/informationText"
+             />
+
+        <com.transico.codezero.transico.CustomComponents.CustomRadioButtonOption.CustomRadioButton
+            android:id="@+id/radioFemale"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            app:groupDescriptionTextValue="Your immediate supervisor and all admin user will see this report"
+            app:groupNameTextValue="Inspector Group"
+
+            />
+
+    </com.transico.codezero.transico.CustomComponents.CustomRadioButtonOption.CustomRadioGroup>
+
+</RelativeLayout>

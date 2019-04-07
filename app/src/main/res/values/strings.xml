@@ -68,5 +68,42 @@
     <!--Time Log Strings-->
     <string name="tl_title_date">Dec 17</string>
 
+    <string name="title_activity_change_password">ChangePasswordActivity</string>
+
+    <string name="title_activity_new_report_log">Create New Report Log</string>
+
+    <string name="title_activity_group_section">GroupSectionActivity</string>
+
+    <string name="title_activity_title_select">TitleSelectActivity</string>
+    <string name="title_activity_response">Response Activity</string>
+
+    <string name="group_title">
+        What is group section
+    </string>
+
+    <string name="title_selection_header">
+        Why do I have to select a title
+    </string>
+
+    <string name="group_description">
+        Please note that your report is not delivered to a specific member of the group.
+        The report is sent to the group to which all users of that group have access to the report,
+        however, only the floor supervisor can assign a specific user to action the log.
+    </string>
+
+    <string name="title_description">
+        By selecting a title for your report, this help us to better understand your issue and
+        fast tract your report to the right persons to offer assistance.
+    </string>
+
+    <string name="lorem">
+        <b>Lorem Ipsum</b> is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.\n\nIt has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.
+    </string>
+
+    <string name="report_log_display_title">\@Title</string>
+    <string name="report_log_display_group">\@Group</string>
+    <string name="report_log_display_bus">\@Bus</string>
+    <string name="report_log_display_status">\@Status</string>
+
 
 </resources>

@@ -1,4 +1,4 @@
-package com.transico.codezero.transico.TimeLog;
+package com.transico.codezero.transico.TimeLoger;
 
 import android.content.Context;
 import android.net.Uri;
@@ -7,9 +7,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.transico.codezero.transico.FirestoreConnection.FirestoreConnection;
 import com.transico.codezero.transico.R;
 
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 
 /**
@@ -21,6 +24,8 @@ import androidx.fragment.app.Fragment;
 public class TimeLogFragment extends Fragment {
 
     private OnFragmentInteractionListener mListener;
+    private RecyclerView mRecycler;
+    TimeLogAdapter logAdapter;
 
     public TimeLogFragment() {
         // Required empty public constructor
@@ -30,8 +35,13 @@ public class TimeLogFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+
+
+        View view = inflater.inflate(R.layout.fragment_time_log, container, false);
         // Inflate the layouts for this fragment
-        return inflater.inflate(R.layout.fragment_time_log, container, false);
+
+        init(view);
+        return view;
     }
 
     // TODO: Rename method, update argument and hook method into UI event
@@ -44,6 +54,7 @@ public class TimeLogFragment extends Fragment {
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
+
         if (context instanceof OnFragmentInteractionListener) {
             mListener = (OnFragmentInteractionListener) context;
         } else {
@@ -71,5 +82,21 @@ public class TimeLogFragment extends Fragment {
     public interface OnFragmentInteractionListener {
         // TODO: Update argument type and name
         void onFragmentInteraction(Uri uri);
+    }
+
+    private void init(View v){
+
+        mRecycler = v.findViewById(R.id.time_log_rv_container);
+
+//        now that we have the result we can apply to adapter to be shown in the recyclerview
+        logAdapter = new TimeLogAdapter(FirestoreConnection.TimeManager.dailyLogQuery("35264"), getContext());
+
+        mRecycler.setHasFixedSize(true);
+        mRecycler.setLayoutManager(new LinearLayoutManager(getContext()));
+        mRecycler.setAdapter(logAdapter);
+
+//        logAdapter.notifyDataSetChanged();
+        logAdapter.startListening();
+
     }
 }

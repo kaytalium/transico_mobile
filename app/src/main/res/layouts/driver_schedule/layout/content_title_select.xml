@@ -1,11 +1,121 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
-    tools:context=".ReportLog.TitleSelectActivity"
-    tools:showIn="@layout/activity_title_select">
+    tools:context=".ReportLog.TitleSelectionActivity"
+    tools:showIn="@layout/activity_title_selection"
+    android:background="@color/background">
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    <TextView
+        android:id="@+id/tv_question"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/title_selection_header"
+        android:textColor="@color/colorPrimary"
+        android:layout_marginStart="@dimen/selection_desc_margin"
+        android:layout_marginTop="@dimen/selection_desc_margin"
+        android:layout_marginBottom="8dp"
+        android:textSize="14sp"
+        android:textStyle="bold"/>
+
+    <TextView
+        android:id="@+id/tv_explanation"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textColor="#b3afaf"
+        android:layout_marginStart="@dimen/selection_desc_margin"
+        android:layout_marginEnd="@dimen/selection_desc_margin"
+        android:text="@string/title_description"
+        android:layout_below="@id/tv_question"
+        />
+
+    <TextView
+        android:id="@+id/tv_separator"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Select from the list below"
+        android:padding="16dp"
+        android:textColor="@color/colorPrimary"
+        android:layout_marginTop="8dp"
+        android:layout_below="@id/tv_explanation"
+        android:background="#aae18a3d"/>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/tv_separator"
+        android:layout_marginTop="0dp">
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            >
+
+            <com.transico.codezero.transico.CustomComponents.CustomRadioButtonOption.CustomRadioGroup
+                android:id="@+id/custom_radio_group_title_list"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:weightSum="7"
+                android:orientation="vertical"
+                android:background="@drawable/custom_radio_button_bg_bottom">
+
+                <com.transico.codezero.transico.CustomComponents.CustomRadioButtonOption.CustomRadioButton
+                    android:id="@+id/crb_tire"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                app:groupNameTextValue="Tire Issues"
+                    app:groupDescriptionTextValue="For all tire related issues e.g deflated wheels"/>
+
+                <com.transico.codezero.transico.CustomComponents.CustomRadioButtonOption.CustomRadioButton
+                    android:id="@+id/crb_engine"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    app:groupNameTextValue="Engine Issues"/>
+
+                <com.transico.codezero.transico.CustomComponents.CustomRadioButtonOption.CustomRadioButton
+                    android:id="@+id/crb_ticking"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    app:groupNameTextValue="Ticketing Machine Issues"/>
+
+                <com.transico.codezero.transico.CustomComponents.CustomRadioButtonOption.CustomRadioButton
+                    android:id="@+id/crb_buzzer"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    app:groupNameTextValue="Buzzer Bell Issues"/>
+
+                <com.transico.codezero.transico.CustomComponents.CustomRadioButtonOption.CustomRadioButton
+                    android:id="@+id/crb_haul"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    app:groupNameTextValue="Haul Breach"
+                    app:groupDescriptionTextValue="For any issues that causes external objects to enter the vehicle in a manner that was not designed. "/>
+
+                <com.transico.codezero.transico.CustomComponents.CustomRadioButtonOption.CustomRadioButton
+                    android:id="@+id/crb_vent"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    app:groupNameTextValue="Ventilation Issues"/>
+
+                <com.transico.codezero.transico.CustomComponents.CustomRadioButtonOption.CustomRadioButton
+                    android:id="@+id/personal"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    app:groupNameTextValue="Personal Assault"/>
+
+            </com.transico.codezero.transico.CustomComponents.CustomRadioButtonOption.CustomRadioGroup>
+        </RelativeLayout>
+    </ScrollView>
+
+
+
+</RelativeLayout>

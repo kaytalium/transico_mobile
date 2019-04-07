@@ -1,16 +1,14 @@
-package com.transico.codezero.transico.ReportLog;
+package com.transico.codezero.transico.CustomComponents.CustomRadioButtonOption;
 
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.CompoundButton;
 import android.widget.LinearLayout;
-import android.widget.RadioGroup;
 
 import com.transico.codezero.transico.R;
+import com.transico.codezero.transico.SystemHelper.ViewUtils;
 
 import java.util.HashMap;
 

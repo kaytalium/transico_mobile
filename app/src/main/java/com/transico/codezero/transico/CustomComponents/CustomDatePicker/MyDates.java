@@ -1,4 +1,7 @@
-package com.transico.codezero.transico.GeneralUI.CustomDatePicker;
+package com.transico.codezero.transico.CustomComponents.CustomDatePicker;
+
+import com.transico.codezero.transico.SystemHelper.Helper;
+import com.transico.codezero.transico.SystemHelper.databaseCommand;
 
 import java.util.Calendar;
 import java.util.Date;
@@ -11,17 +14,13 @@ import java.util.Date;
     private Calendar calendar;
     private  Date date;
 
-    MyDates(String weekDay, String weekDate, String month) {
-        this.weekDay = weekDay;
-        this.weekDate = weekDate;
-        this.month = month;
+    MyDates(Calendar calendar) {
 
-        //setup the calendar to reflect date given to object
-        calendar = Calendar.getInstance();
-        date = new Date();
-//        /**/calendar.setTime(date);
-        calendar.set(Calendar.MONTH, (Integer.valueOf(month)-1));
-        calendar.set(Calendar.DAY_OF_MONTH,Integer.valueOf(weekDate));
+        weekDay = Helper.DateFormatter(databaseCommand.DateTimeFormat.dayOfTheWeek, calendar.getTime());
+        weekDate = Helper.DateFormatter(databaseCommand.DateTimeFormat.date, calendar.getTime());
+        month =  Helper.DateFormatter(databaseCommand.DateTimeFormat.month, calendar.getTime());
+        this.calendar = Calendar.getInstance();
+        this.calendar.setTime(calendar.getTime());
     }
 
     MyDates() {

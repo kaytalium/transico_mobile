@@ -1,11 +1,148 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:context=".ReportLog.NewReportLogActivity"
-    tools:showIn="@layout/activity_new_report_log">
+    tools:showIn="@layout/activity_new_report_log"
+    android:background="@color/secondaryBackground"
+    >
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    <RelativeLayout
+        android:id="@+id/heading_layout"
+        android:layout_width="match_parent"
+        android:layout_height="80dp">
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/iv_profile_image"
+            android:layout_width="50dp"
+            android:layout_height="match_parent"
+            android:layout_marginStart="16dp"
+            android:src="@drawable/jimmy_fallon"/>
+
+        <TextView
+            android:id="@+id/tv_nrla_username"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_marginStart="12dp"
+            android:layout_marginTop="13dp"
+            android:layout_toEndOf="@id/iv_profile_image"
+            android:text="Jimmy Fallon"
+            android:textColor="@color/colorPrimary"
+            android:textSize="16sp"
+            android:textStyle="bold" />
+
+
+        <Button
+            android:id="@+id/btnGroup"
+            android:layout_width="68dp"
+            android:layout_height="20dp"
+            android:layout_below="@id/tv_nrla_username"
+            android:layout_marginStart="12dp"
+            android:layout_marginTop="2dp"
+            android:layout_toEndOf="@id/iv_profile_image"
+            android:background="@drawable/create_new_button"
+            android:gravity="center"
+            android:inputType="textCapSentences"
+            android:text="\@ Group"
+            android:textColor="@color/informationText"
+            android:textSize="10sp" />
+
+        <Button
+            android:id="@+id/btnTitle"
+            android:layout_width="69dp"
+            android:layout_height="20dp"
+            android:layout_below="@id/tv_nrla_username"
+            android:layout_marginStart="6dp"
+            android:layout_marginTop="2dp"
+            android:layout_toEndOf="@id/btnGroup"
+            android:background="@drawable/create_new_button"
+            android:inputType="textCapSentences"
+            android:text="+ Title"
+            android:textColor="@color/informationText"
+            android:textSize="10sp" />
+
+
+    </RelativeLayout>
+
+    <TextView
+        android:id="@+id/txt_title"
+        android:layout_width="wrap_content"
+        android:layout_height="20dp"
+        android:text=""
+        android:layout_marginStart="16sp"
+        android:textColor="@color/colorPrimary"
+        android:textStyle="bold"
+        android:textSize="16sp"
+        android:layout_below="@id/heading_layout"
+        />
+
+    <TextView
+        android:id="@+id/txt_group"
+        android:layout_width="wrap_content"
+        android:layout_height="20dp"
+        android:text=""
+        android:layout_marginStart="5sp"
+        android:textColor="@color/informationText"
+        android:textStyle="bold"
+        android:textSize="12sp"
+        android:gravity="bottom"
+        android:layout_below="@id/heading_layout"
+        android:layout_toEndOf="@id/txt_title"
+        />
+
+    <EditText
+        android:id="@+id/et_input"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@id/control_layout"
+        android:layout_below="@id/txt_title"
+        android:fontFamily="@font/istok_web"
+        android:gravity="start"
+        android:hint="Create an amazing report!"
+        android:textColorHint="@color/informationText"
+        android:inputType="textMultiLine|textCapSentences"
+        android:paddingStart="16dp"
+        android:paddingEnd="16dp"
+        android:paddingTop="8dp"
+        android:textSize="24sp"
+        android:textColor="@color/colorPrimary"
+        android:textCursorDrawable="@drawable/cursor_color"
+        android:theme="@style/NewReportEditTextTheme" />
+
+    <LinearLayout
+        android:id="@+id/control_layout"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_alignParentBottom="true"
+        android:weightSum="2"
+        >
+
+        <TextView
+            android:id="@+id/txt_create_new"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="match_parent"
+            android:text="Create New"
+            android:textSize="12sp"
+            android:textColor="@color/primaryBlue"
+            android:gravity="center"
+            android:background="@drawable/reset_password_btn_bg_left"/>
+
+        <TextView
+            android:id="@+id/txt_cancel"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:text="Cancel"
+            android:textSize="12sp"
+            android:textColor="@color/colorPrimary"
+            android:background="@drawable/reset_password_btn_bg_right"
+            android:gravity="center"/>
+
+    </LinearLayout>
+
+</RelativeLayout>
