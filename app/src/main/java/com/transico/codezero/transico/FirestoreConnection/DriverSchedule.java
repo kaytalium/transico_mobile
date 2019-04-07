@@ -1,4 +1,4 @@
-package com.transico.codezero.transico.DriverSchedule;
+package com.transico.codezero.transico.DriverScheduler;
 
 import com.google.firebase.firestore.PropertyName;
 import com.google.firebase.firestore.ServerTimestamp;
