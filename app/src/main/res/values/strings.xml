@@ -105,5 +105,7 @@
     <string name="report_log_display_bus">\@Bus</string>
     <string name="report_log_display_status">\@Status</string>
 
+    <string name="title_activity_entry">Commuters</string>
+    <string name="title_activity_registration_main">Activity</string>
 
 </resources>

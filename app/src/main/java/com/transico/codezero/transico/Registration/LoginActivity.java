@@ -3,6 +3,7 @@ package com.transico.codezero.transico.Registration;
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.annotation.TargetApi;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 
 import androidx.annotation.NonNull;
@@ -36,6 +37,7 @@ import android.widget.TextView;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.transico.codezero.transico.EmployeeActivity;
 import com.transico.codezero.transico.R;
 
 import static android.Manifest.permission.READ_CONTACTS;
@@ -334,12 +336,13 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         }
 
         @Override
-        protected void onPostExecute(final Boolean success) {
+        protected void onPostExecute(Boolean success) {
             mAuthTask = null;
             showProgress(false);
-
+success = true;
             if (success) {
-                finish();
+                Intent i = new Intent(getApplicationContext(), EmployeeActivity.class);
+                startActivity(i);
             } else {
                 mPasswordView.setError(getString(R.string.error_incorrect_password));
                 mPasswordView.requestFocus();
